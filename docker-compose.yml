@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  web:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+      - "9090:80"
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - private-network
+
+networks:
+  private-network:
+    driver: bridge
