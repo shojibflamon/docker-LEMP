@@ -1,0 +1,16 @@
+{
+    "name": "shojibflamon/docker-lnmp",
+    "description": "Its a linux nginx mysql & php stack for web development",
+    "autoload": {
+        "psr-4": {
+            "Shojibflamon\\DockerLnmp\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "shojibflamon",
+            "email": "shojib.seu@gmail.com"
+        }
+    ],
+    "require": {}
+}
