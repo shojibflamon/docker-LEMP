@@ -1,25 +1,41 @@
 version: "3.8"
 services:
-  web:
+  nginx:
     build:
-      context: ./dockerfiles/nginx
+      context: ./dockerfiles
       dockerfile: nginx.dockerfile
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
         - USER=${USER:-shojib}
-    container_name: nginx-container
+    container_name: nginx
     ports:
       - "9090:80"
     volumes:
       - ./src:/var/www/html:delegated
       - ./dockerfiles/nginx/log:/var/log/nginx
-#      move to nginx.dockerfile
-#      - ./dockerfiles/nginx/conf.d:/etc/nginx/conf.d
+    #      move to nginx.dockerfile
+    #      - ./dockerfiles/nginx/conf.d:/etc/nginx/conf.d
     working_dir: /var/www/html
+    depends_on:
+      - php
     networks:
-      - private-network
+      - laravel-private-network
+
+  php:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-shojib}
+    container_name: php
+    volumes:
+      - ./src:/var/www/html:delegated
+    networks:
+      - laravel-private-network
 
 networks:
-  private-network:
+  laravel-private-network:
     driver: bridge
